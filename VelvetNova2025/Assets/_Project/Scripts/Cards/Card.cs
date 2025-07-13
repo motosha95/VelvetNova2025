@@ -51,6 +51,7 @@ public class Card : MonoBehaviour
         frontFace.SetActive(false);
         backFace.SetActive(false);
        
+
     }
     public void ResetCard()
     {

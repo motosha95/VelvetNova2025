@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
         SetupGrid();
         GenerateCards();
         UpdateScore(0);
+        SaveLoadManager.LoadGame();
+
     }
 
     public void SetupGrid()
@@ -95,10 +97,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void UpdateScore(int delta)
+    public void UpdateScore(int delta)
     {
         score += delta;
         UIManager.Instance.UpdateScore(score);
+        SaveLoadManager.SaveGame(score, cards);
+
     }
 
     private void CheckGameOver()
@@ -108,9 +112,14 @@ public class GameManager : MonoBehaviour
             if (!card.IsMatched)
                 return;
         }
+
         UIManager.Instance.ShowGameOver();
     }
+  
 
+ 
+
+  
     public bool CanFlipCard() => revealedCards.Count < 2;
 
     private void Shuffle(List<int> list)

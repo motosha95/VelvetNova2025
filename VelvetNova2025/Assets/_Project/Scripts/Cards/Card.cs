@@ -15,7 +15,7 @@ public class Card : MonoBehaviour
     [Header("Animation")]
     public Animator animator;
 
-    private bool isFlipped = false;
+    private bool isFlipped = true;
     private bool isMatched = false;
 
     public void Initialize(int id, Sprite frontSprite)
@@ -41,14 +41,25 @@ public class Card : MonoBehaviour
     public void SetMatched()
     {
         isMatched = true;
-    }
+        
+        StartCoroutine(HideCardAfterDelay(1f));
 
+    }
+    private IEnumerator<WaitForSeconds> HideCardAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        frontFace.SetActive(false);
+        backFace.SetActive(false);
+       
+    }
     public void ResetCard()
     {
+      if(IsFlipped)
+            animator.SetTrigger("Flip");
+
         isFlipped = false;
         isMatched = false;
-        frontFace.SetActive(false);
-        backFace.SetActive(true);
+
     }
 
     public bool IsMatched => isMatched;

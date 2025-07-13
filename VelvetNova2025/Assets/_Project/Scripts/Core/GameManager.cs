@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
 
 
@@ -15,9 +14,7 @@ public class GameManager : MonoBehaviour
     public List<Sprite> cardSprites;
     public Vector2Int gridSize = new Vector2Int(4, 3);
 
-    [Header("UI")]
-    public Text scoreText;
-    public GameObject gameOverPanel;
+  
 
     private List<Card> cards = new();
     private List<Card> revealedCards = new();
@@ -82,13 +79,13 @@ public class GameManager : MonoBehaviour
             else
             {
                 UpdateScore(-10);
-                StartCoroutine(HideCardsAfterDelay(1f));
+                StartCoroutine(ResetCardsAfterDelay(1f));
             }
             revealedCards.Clear();
         }
     }
 
-    private IEnumerator<WaitForSeconds> HideCardsAfterDelay(float delay)
+    private IEnumerator<WaitForSeconds> ResetCardsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         foreach (var card in cards)
@@ -101,7 +98,7 @@ public class GameManager : MonoBehaviour
     private void UpdateScore(int delta)
     {
         score += delta;
-        scoreText.text = $"Score: {score}";
+        UIManager.Instance.UpdateScore(score);
     }
 
     private void CheckGameOver()
@@ -111,7 +108,7 @@ public class GameManager : MonoBehaviour
             if (!card.IsMatched)
                 return;
         }
-        gameOverPanel.SetActive(true);
+        UIManager.Instance.ShowGameOver();
     }
 
     public bool CanFlipCard() => revealedCards.Count < 2;

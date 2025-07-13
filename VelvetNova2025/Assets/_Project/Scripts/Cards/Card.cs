@@ -36,18 +36,23 @@ public class Card : MonoBehaviour
     {
         isFlipped = showFront;
         animator.SetTrigger("Flip");
+        AudioManager.Instance.PlayFlip();
+
     }
 
     public void SetMatched()
     {
         isMatched = true;
-        
+
         StartCoroutine(HideCardAfterDelay(1f));
 
     }
     private IEnumerator<WaitForSeconds> HideCardAfterDelay(float delay)
     {
+
         yield return new WaitForSeconds(delay);
+        AudioManager.Instance.PlayMatch();
+
         frontFace.SetActive(false);
         backFace.SetActive(false);
        

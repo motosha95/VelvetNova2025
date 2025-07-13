@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 UpdateScore(-10);
+
                 StartCoroutine(ResetCardsAfterDelay(1f));
             }
             revealedCards.Clear();
@@ -90,6 +91,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator<WaitForSeconds> ResetCardsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        AudioManager.Instance.PlayMismatch();
+
         foreach (var card in cards)
         {
             if (!card.IsMatched)
@@ -112,6 +115,7 @@ public class GameManager : MonoBehaviour
             if (!card.IsMatched)
                 return;
         }
+        AudioManager.Instance.PlayGameOver();
 
         UIManager.Instance.ShowGameOver();
     }

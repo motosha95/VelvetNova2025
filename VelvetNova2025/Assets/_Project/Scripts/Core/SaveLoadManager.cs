@@ -31,8 +31,8 @@ public static class SaveLoadManager
         string json = File.ReadAllText(SavePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-        GameManager.Instance.UpdateScore(0); // Set current score
-        foreach (var card in GameObject.FindObjectsOfType<Card>())
+        GameManager.Instance.UpdateScore(data.score); // Set current score
+        foreach (var card in GameManager.Instance.cards)
         {
             if (data.matchedIDs.Contains(card.cardID))
             {

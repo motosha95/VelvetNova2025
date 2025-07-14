@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
   
 
-    private List<Card> cards = new();
+    public List<Card> cards = new();
     private List<Card> revealedCards = new();
     private int score = 0;
 
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         SetupGrid();
         GenerateCards();
-        UpdateScore(0);
+        //UpdateScore(0);
         SaveLoadManager.LoadGame();
 
     }
